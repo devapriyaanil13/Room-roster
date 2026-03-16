@@ -1,0 +1,55 @@
+.residents {
+  padding: 40px;
+  background: #f4f6fb;
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.residents h1 {
+  font-size: 34px;
+  margin-bottom: 25px;
+  color: #222;
+}
+
+.resident-container {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+.resident-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.resident-table th {
+  text-align: left;
+  padding: 14px;
+  background: #f1f4ff;
+  font-weight: 600;
+  color: #444;
+}
+
+.resident-table td {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.resident-table tr:hover {
+  background: #fafbff;
+}
+
+.add-resident-btn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.add-resident-btn:hover {
+  background: #2563eb;
+}

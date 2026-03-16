@@ -1,0 +1,56 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import apiClient from "../services/apiClient";
+import "../styles/Login.css";
+
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await apiClient.post("/auth/login", {
+        email,
+        password,
+      });
+
+      localStorage.setItem("token", res.data.token);
+      window.location.href = "/";
+    } catch (err) {
+      alert("Invalid login");
+    }
+  };
+
+  return (
+    <div className="auth-container">
+      <form className="auth-box" onSubmit={handleLogin}>
+        <h2>Login</h2>
+
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button type="submit">Login</button>
+
+        <p>
+          Don't have an account? <Link to="/signup">Sign Up</Link>
+        </p>
+
+      </form>
+    </div>
+  );
+}
+
+export default Login;
