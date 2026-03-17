@@ -17,7 +17,7 @@ function AddPG() {
 
     try {
 
-      await apiClient.post("/pgs", {
+      const res = await apiClient.post("/pgs", {
         name,
         location,
         owner,
@@ -25,20 +25,23 @@ function AddPG() {
         totalRooms
       });
 
+      console.log("PG added:", res.data);
+
       alert("PG added successfully");
 
       navigate("/pgs");
 
     } catch (error) {
 
-      console.log(error);
+      console.log("Add PG Error:", error.response?.data || error.message);
+
       alert("Error adding PG");
 
     }
   };
 
   return (
-    <div className="addpg">
+    <div>
 
       <h1>Add PG</h1>
 
@@ -60,14 +63,14 @@ function AddPG() {
 
         <input
           type="text"
-          placeholder="Owner Name"
+          placeholder="Owner"
           value={owner}
           onChange={(e)=>setOwner(e.target.value)}
         />
 
         <input
           type="text"
-          placeholder="Contact Number"
+          placeholder="Contact"
           value={contact}
           onChange={(e)=>setContact(e.target.value)}
         />
@@ -79,9 +82,7 @@ function AddPG() {
           onChange={(e)=>setTotalRooms(e.target.value)}
         />
 
-        <button type="submit">
-          Add PG
-        </button>
+        <button type="submit">Add PG</button>
 
       </form>
 

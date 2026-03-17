@@ -7,20 +7,16 @@ function Home() {
   const navigate = useNavigate();
 
   const [location, setLocation] = useState("");
-  const [pgName, setPgName] = useState("");
+  const [name, setName] = useState("");
   const [rooms, setRooms] = useState("");
-  const [status, setStatus] = useState("");
 
   const handleSearch = (e) => {
     e.preventDefault();
 
-    navigate(
-      `/pgs?location=${location}&name=${pgName}&rooms=${rooms}&status=${status}`
-    );
+    navigate(`/pgs?location=${location}&name=${name}&rooms=${rooms}`);
   };
 
   return (
-
     <div className="home">
 
       <div className="search-box">
@@ -31,37 +27,26 @@ function Home() {
 
           <input
             type="text"
-            placeholder="Search by Location"
+            placeholder="Location"
             value={location}
             onChange={(e)=>setLocation(e.target.value)}
           />
 
           <input
             type="text"
-            placeholder="Search PG Name"
-            value={pgName}
-            onChange={(e)=>setPgName(e.target.value)}
+            placeholder="PG Name"
+            value={name}
+            onChange={(e)=>setName(e.target.value)}
           />
 
           <input
             type="number"
-            placeholder="Minimum Rooms"
+            placeholder="Min Rooms"
             value={rooms}
             onChange={(e)=>setRooms(e.target.value)}
           />
 
-          <select
-            value={status}
-            onChange={(e)=>setStatus(e.target.value)}
-          >
-            <option value="">Room Status</option>
-            <option value="vacant">Vacant</option>
-            <option value="occupied">Occupied</option>
-          </select>
-
-          <button type="submit">
-            Search
-          </button>
+          <button type="submit">Search</button>
 
         </form>
 
