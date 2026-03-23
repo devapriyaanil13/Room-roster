@@ -7,6 +7,7 @@ function Match() {
   const navigate = useNavigate();
   const [profiles, setProfiles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     fetchProfiles();
@@ -104,7 +105,7 @@ function Match() {
           <button className="btn-pass" onClick={handlePass}>
             <span className="icon">❌</span>
           </button>
-          <button className="btn-message" onClick={() => handleMessage(currentProfile._id)}>
+          <button className="btn-message" onClick={handleConnect}>
             <span className="icon">💬</span>
           </button>
         </div>

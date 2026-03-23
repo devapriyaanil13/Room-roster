@@ -18,6 +18,7 @@ import MatchesList from "./pages/MatchesList";
 function App() {
 
   const token = localStorage.getItem("token");
+  const isAuthenticated = token && token !== "undefined" && token !== "null";
 
   return (
 
@@ -30,7 +31,7 @@ function App() {
         {/* Default route → LOGIN */}
         <Route
           path="/"
-          element={token ? <Navigate to="/home" /> : <Login />}
+          element={isAuthenticated ? <Navigate to="/home" /> : <Login />}
         />
 
         <Route path="/signup" element={<Signup />} />
