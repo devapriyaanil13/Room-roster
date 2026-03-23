@@ -1,4 +1,4 @@
-require("dotenv").config({ path: __dirname + "/.env" }); // 🔥 force load env
+require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -7,7 +7,7 @@ const path = require("path");
 
 const app = express();
 
-// ✅ Debug (you can remove later)
+// ✅ Debug (optional)
 console.log("ENV CHECK:", process.env.MONGO_URI);
 
 // Middleware
@@ -23,25 +23,31 @@ const userRoutes = require("./routes/userRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
 
-// Expose static uploads folder
+// Static folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+// API Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/upload", uploadRoutes);
 
-// MongoDB Connection
+// Port
+const PORT = process.env.PORT || 5000;
+
+// MongoDB Connection + Server Start
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected ✅"))
+  .then(() => {
+    console.log("MongoDB Connected ✅");
+
+    ```
+app.listen(PORT, () => {
+  console.log(`Server running on port ${ PORT } 🚀`);
+});
+```
+
+  })
   .catch(err => {
     console.error("MongoDB Error ❌:", err);
     process.exit(1);
   });
-
-// Server
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT} 🚀`);
-});
