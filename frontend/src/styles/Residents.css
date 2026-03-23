@@ -1,6 +1,6 @@
 .residents {
   padding: 40px;
-  background: #f4f6fb;
+  background: #fdfbf7;
   min-height: 100vh;
   font-family: "Segoe UI", sans-serif;
 }
@@ -41,8 +41,8 @@
 }
 
 .add-resident-btn {
-  background: #3b82f6;
-  color: white;
+  background: #ff7b72;
+  color: #ffffff;
   border: none;
   padding: 10px 18px;
   border-radius: 6px;

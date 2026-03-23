@@ -1,46 +1,47 @@
+require("dotenv").config({ path: __dirname + "/.env" }); // 🔥 force load env
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config();
+const path = require("path");
 
 const app = express();
 
+// ✅ Debug (you can remove later)
+console.log("ENV CHECK:", process.env.MONGO_URI);
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: "*"
+}));
+
 app.use(express.json());
 
-
-// Import Routes
+// Routes
 const authRoutes = require("./routes/authRoutes");
-const pgRoutes = require("./routes/pgRoutes");
-const roomRoutes = require("./routes/roomRoutes");
-const residentRoutes = require("./routes/residentRoutes");
+const userRoutes = require("./routes/userRoutes");
+const messageRoutes = require("./routes/messageRoutes");
+const uploadRoutes = require("./routes/uploadRoutes");
 
+// Expose static uploads folder
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Route Middlewares
 app.use("/api/auth", authRoutes);
-app.use("/api/pgs", pgRoutes);
-app.use("/api/rooms", roomRoutes);
-app.use("/api/residents", residentRoutes);
-
+app.use("/api/users", userRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/upload", uploadRoutes);
 
 // MongoDB Connection
-mongoose
-  .connect("mongodb://127.0.0.1:27017/roomroster")
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log(err));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected ✅"))
+  .catch(err => {
+    console.error("MongoDB Error ❌:", err);
+    process.exit(1);
+  });
 
-
-// Test Route
-app.get("/", (req, res) => {
-  res.send("RoomRoster API Running");
-});
-
-
-// Start Server
+// Server
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT} 🚀`);
 });

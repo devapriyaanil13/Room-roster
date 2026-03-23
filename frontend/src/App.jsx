@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -6,13 +6,18 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Home from "./pages/Home";
-import Dashboard from "./pages/Dashboard";
-import PGList from "./pages/PGList";
-import Rooms from "./pages/Rooms";
-import AddPG from "./pages/AddPG";
+import Match from "./pages/Match";
+import Profile from "./pages/Profile";
+import Chat from "./pages/Chat";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Inbox from "./pages/Inbox";
+
+import MatchesList from "./pages/MatchesList";
 
 function App() {
+
+  const token = localStorage.getItem("token");
 
   return (
 
@@ -22,56 +27,60 @@ function App() {
 
       <Routes>
 
-        <Route path="/login" element={<Login />} />
+        {/* Default route → LOGIN */}
+        <Route
+          path="/"
+          element={token ? <Navigate to="/home" /> : <Login />}
+        />
 
         <Route path="/signup" element={<Signup />} />
 
-        {/* Search Page */}
+        {/* Public info routes */}
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+
+        {/* Protected Routes */}
         <Route
-          path="/"
+          path="/home"
           element={
             <ProtectedRoute>
-              <Home />
+              <Match />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />
 
-        {/* Dashboard */}
         <Route
-          path="/dashboard"
+          path="/inbox"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <Inbox />
             </ProtectedRoute>
           }
         />
 
-        {/* PG List */}
         <Route
-          path="/pgs"
+          path="/matches"
           element={
             <ProtectedRoute>
-              <PGList />
+              <MatchesList />
             </ProtectedRoute>
           }
         />
-
-        {/* Rooms */}
+        
         <Route
-          path="/rooms"
+          path="/chat/:id"
           element={
             <ProtectedRoute>
-              <Rooms />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Add PG */}
-        <Route
-          path="/add-pg"
-          element={
-            <ProtectedRoute>
-              <AddPG />
+              <Chat />
             </ProtectedRoute>
           }
         />

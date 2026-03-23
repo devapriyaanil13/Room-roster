@@ -60,7 +60,9 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    res.json({ token });
+    const isNewProfile = user.gender === "Any" || !user.bio;
+
+    res.json({ token, isNewProfile });
 
   } catch (error) {
 

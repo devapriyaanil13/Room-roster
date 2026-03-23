@@ -1,19 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap');
 
 /* ── Variables ─────────────────────────────── */
 :root {
-  --bg: #0e0e0e;
-  --surface: rgba(20, 20, 20, 0.85);
-  --border: rgba(255, 255, 255, 0.07);
-  --border-focus: rgba(232, 162, 39, 0.55);
-  --accent: #e8a227;
-  --accent-glow: rgba(232, 162, 39, 0.15);
-  --accent-glow-strong: rgba(232, 162, 39, 0.28);
-  --text-primary: #f0ece4;
-  --text-muted: rgba(240, 236, 228, 0.38);
-  --text-placeholder: rgba(240, 236, 228, 0.22);
-  --input-bg: rgba(255, 255, 255, 0.03);
-  --input-bg-focus: rgba(232, 162, 39, 0.04);
+  --bg: #fdfbf7;
+  --surface: #ffffff;
+  --border: #e6d5d5;
+  --border-focus: #ff7b72;
+  --accent: #ff7b72;
+  --accent-glow: rgba(255, 183, 178, 0.25);
+  --accent-glow-strong: rgba(255, 183, 178, 0.4);
+  --text-primary: #4a4a4a;
+  --text-muted: #888888;
+  --text-placeholder: #bbbbbb;
+  --input-bg: #fefcfc;
+  --input-bg-focus: rgba(255, 183, 178, 0.05);
 }
 
 /* ── Full-page Container ───────────────────── */
@@ -48,7 +48,7 @@
     transform: translate(-50%, -50%);
     width: 600px;
     height: 600px;
-    background: radial-gradient(ellipse, rgba(232, 162, 39, 0.055) 0%, transparent 65%);
+    background: radial-gradient(ellipse, rgba(255, 183, 178, 0.15) 0%, transparent 65%);
     pointer-events: none;
     z-index: 0;
   }
@@ -76,8 +76,8 @@
 
   box-shadow:
     0 0 0 1px rgba(255,255,255,0.03) inset,
-    0 32px 64px rgba(0, 0, 0, 0.6),
-    0 8px 24px rgba(0, 0, 0, 0.4);
+    0 32px 64px rgba(0, 0, 0, 0.08),
+    0 8px 24px rgba(0, 0, 0, 0.04);
 
   animation: card-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
 
@@ -109,7 +109,7 @@
 
 /* ── Heading ───────────────────────────────── */
 .auth-box h2 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 2rem;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -213,7 +213,7 @@
   }
 
   &:hover {
-    background: #f0aa2e;
+    background: #ff9e99;
     box-shadow:
       0 0 20px var(--accent-glow-strong),
       0 4px 12px rgba(0, 0, 0, 0.35);

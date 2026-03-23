@@ -1,0 +1,115 @@
+.matches-container {
+  min-height: calc(100vh - 68px);
+  padding: 3rem 1.5rem;
+  background: var(--bg, #fdfbf7);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.matches-card {
+  width: 100%;
+  max-width: 800px;
+  background: var(--surface, #ffffff);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  animation: fade-in 0.4s ease;
+}
+
+.matches-card h2 {
+  font-size: 2rem;
+  color: var(--accent, #ff7b72);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.matches-subtitle {
+  color: var(--text-muted, #888888);
+  margin-bottom: 2rem;
+}
+
+.empty-matches {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.empty-matches p {
+  color: var(--text-primary, #4a4a4a);
+  margin-bottom: 1.5rem;
+}
+
+.empty-matches button {
+  background: var(--accent, #ff7b72);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.empty-matches button:hover {
+  background: var(--accent-hover, #ff5a50);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 123, 114, 0.4);
+}
+
+.matches-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.match-grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  background: var(--input-bg, #fdfbf7);
+  border: 1px solid var(--border, #e6d5d5);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.match-grid-item:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent, #ff7b72);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.match-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--border, #e6d5d5);
+  margin-bottom: 1rem;
+}
+
+.match-avatar.placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 2.5rem;
+  color: white;
+  background: var(--accent, #ff7b72);
+}
+
+.match-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: var(--text-primary, #4a4a4a);
+}
+
+.match-location {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted, #888888);
+}
