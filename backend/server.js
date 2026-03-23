@@ -7,7 +7,7 @@ const path = require("path");
 
 const app = express();
 
-// ✅ Debug (optional)
+// Debug (optional)
 console.log("ENV CHECK:", process.env.MONGO_URI);
 
 // Middleware
@@ -47,7 +47,7 @@ app.listen(PORT, () => {
 ```
 
   })
-  .catch(err => {
+  .catch((err) => {
     console.error("MongoDB Error ❌:", err);
     process.exit(1);
   });
