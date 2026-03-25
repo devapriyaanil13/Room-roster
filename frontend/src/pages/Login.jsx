@@ -28,7 +28,8 @@ function Login() {
       }
 
     } catch (err) {
-      alert("Invalid login");
+      const errorMsg = err.response?.data?.message || err.message || "Invalid login";
+      alert(errorMsg);
     }
   };
 
