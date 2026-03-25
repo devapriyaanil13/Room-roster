@@ -45,5 +45,5 @@ mongoose.connect(process.env.MONGO_URI)
   })
   .catch((err) => {
     console.error("MongoDB Error ❌:", err);
-    process.exit(1);
+    throw err; // Let it crash naturally to ensure the error log is flushed to Render
   });
