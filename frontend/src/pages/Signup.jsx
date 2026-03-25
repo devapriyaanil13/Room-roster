@@ -23,7 +23,8 @@ function Signup() {
       window.location.href = "/login";
 
     } catch (err) {
-      alert("Signup failed");
+      const errorMsg = err.response?.data?.message || err.message || "Signup failed";
+      alert(errorMsg);
     }
   };
 
