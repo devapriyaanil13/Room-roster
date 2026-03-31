@@ -22,7 +22,7 @@ function Login() {
       localStorage.setItem("token", res.data.token);
       
       if (res.data.isNewProfile) {
-        navigate("/profile?tab=edit");
+        navigate("/profile?tab=preferences");
       } else {
         navigate("/home");
       }
