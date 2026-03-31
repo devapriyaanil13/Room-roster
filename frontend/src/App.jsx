@@ -33,10 +33,7 @@ function App() {
           path="/"
           element={isAuthenticated ? <Navigate to="/home" /> : <Login />}
         />
-        <Route
-          path="/login"
-          element={isAuthenticated ? <Navigate to="/home" /> : <Login />}
-        />
+        <Route path="/login" element={<Navigate to="/" replace />} />
 
         <Route path="/signup" element={<Signup />} />
 
