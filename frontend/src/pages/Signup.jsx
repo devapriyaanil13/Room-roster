@@ -21,7 +21,7 @@ function Signup() {
       });
 
       alert("Account created!");
-      navigate("/login");
+      navigate("/");
 
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.message || "Signup failed";
@@ -60,7 +60,7 @@ function Signup() {
         <button type="submit">Sign Up</button>
 
         <p>
-          Already have an account? <Link to="/login">Login</Link>
+          Already have an account? <Link to="/">Login</Link>
         </p>
 
       </form>
