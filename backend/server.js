@@ -43,6 +43,15 @@ app.use("/api/users", userRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/upload", uploadRoutes);
 app.get("/api/health", (req, res) => res.status(200).json({ status: "ok" }));
+app.get("/", (req, res) =>
+  res.status(200).json({
+    message: "Room Roster backend is running",
+    health: "/api/health",
+  })
+);
+app.use("/api", (req, res) => {
+  res.status(404).json({ message: "API route not found" });
+});
 
 // Port
 const PORT = process.env.PORT || 5000;
