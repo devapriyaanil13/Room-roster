@@ -30,8 +30,8 @@ router.post("/", upload.single("image"), (req, res) => {
     return res.status(400).json({ message: "No file uploaded" });
   }
 
-  // Return the public URL for the image
-  const imageUrl = `http://localhost:${process.env.PORT || 5000}/uploads/${req.file.filename}`;
+  // Build URL from the incoming request host/protocol for cloud deployments.
+  const imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
   res.json({ url: imageUrl });
 });
 

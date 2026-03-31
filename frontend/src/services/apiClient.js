@@ -1,9 +1,11 @@
 import axios from "axios";
 
-console.log("API URL:", import.meta.env.VITE_API_URL);
+const rawApiUrl = import.meta.env.VITE_API_URL;
+const normalizedApiBase = rawApiUrl ? rawApiUrl.replace(/\/+$/, "") : "";
+const apiBaseURL = normalizedApiBase ? `${normalizedApiBase}/api` : "/api";
 
 const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL + "/api"
+  baseURL: apiBaseURL
 });
 apiClient.interceptors.response.use(
   (response) => response,

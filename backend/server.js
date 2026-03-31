@@ -7,13 +7,24 @@ const path = require("path");
 
 const app = express();
 
-// Debug (optional)
-console.log("ENV CHECK:", process.env.MONGO_URI);
+const allowedOrigins = (process.env.CORS_ORIGIN || "")
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 // Middleware
-app.use(cors({
-  origin: "*"
-}));
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow non-browser tools and same-origin requests without Origin header.
+      if (!origin) return callback(null, true);
+      if (!allowedOrigins.length || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
+  })
+);
 
 app.use(express.json());
 
@@ -31,6 +42,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/upload", uploadRoutes);
+app.get("/api/health", (req, res) => res.status(200).json({ status: "ok" }));
 
 // Port
 const PORT = process.env.PORT || 5000;
