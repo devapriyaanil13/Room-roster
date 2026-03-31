@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../services/apiClient";
 import "../styles/Login.css";
 
@@ -8,6 +8,7 @@ function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -20,7 +21,7 @@ function Signup() {
       });
 
       alert("Account created!");
-      window.location.href = "/login";
+      navigate("/login");
 
     } catch (err) {
       const errorMsg = err.response?.data?.message || err.message || "Signup failed";
