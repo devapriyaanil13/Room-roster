@@ -1,14 +1,29 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import apiClient from "../services/apiClient";
+import apiClient, { apiBaseURL } from "../services/apiClient";
+import io from "socket.io-client";
 import "../styles/Chat.css";
+
+const endPoint = apiBaseURL.replace(/\/api$/, "");
+let socket;
 
 function Chat() {
   const { id } = useParams();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [socketConnected, setSocketConnected] = useState(false);
   const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    socket = io(endPoint);
+    socket.emit("setup", { _id: currentUserId });
+    socket.on("connected", () => setSocketConnected(true));
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     // Determine current user from profile
@@ -18,17 +33,29 @@ function Chat() {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         });
         setCurrentUserId(res.data._id);
+        socket.emit("setup", res.data);
       } catch (e) {
         console.error("Failed to fetch user");
       }
     };
     fetchUser();
     fetchMessages();
-    
-    // Simple polling for new messages every 3 seconds
-    const interval = setInterval(fetchMessages, 3000);
-    return () => clearInterval(interval);
   }, [id]);
+
+  useEffect(() => {
+    socket.on("message received", (newMessageReceived) => {
+      // Check if the incoming message is from the currently active chat
+      if (!id || id !== newMessageReceived.senderId) {
+        // Notification could go here
+      } else {
+        setMessages((prev) => [...prev, newMessageReceived]);
+      }
+    });
+
+    return () => {
+      socket.off("message received");
+    }
+  });
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -53,6 +80,7 @@ function Chat() {
       const res = await apiClient.post(`/messages/${id}`, { text: newMessage }, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
+      socket.emit("new message", res.data);
       setMessages([...messages, res.data]);
       setNewMessage("");
     } catch (error) {

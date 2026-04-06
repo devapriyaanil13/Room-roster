@@ -15,7 +15,7 @@ function resolveApiBaseURL() {
   return `${PRODUCTION_API_FALLBACK}/api`;
 }
 
-const apiBaseURL = resolveApiBaseURL();
+export const apiBaseURL = resolveApiBaseURL();
 
 const apiClient = axios.create({
   baseURL: apiBaseURL

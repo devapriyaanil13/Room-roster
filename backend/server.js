@@ -4,8 +4,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const path = require("path");
+const http = require("http");
+const { Server } = require("socket.io");
 
 const app = express();
+const server = http.createServer(app);
 
 const allowedOrigins = (process.env.CORS_ORIGIN || "")
   .split(",")
@@ -13,18 +16,36 @@ const allowedOrigins = (process.env.CORS_ORIGIN || "")
   .filter(Boolean);
 
 // Middleware
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      // Allow non-browser tools and same-origin requests without Origin header.
-      if (!origin) return callback(null, true);
-      if (!allowedOrigins.length || allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-      return callback(new Error("Not allowed by CORS"));
-    },
-  })
-);
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (!allowedOrigins.length || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("Not allowed by CORS"));
+  },
+};
+
+app.use(cors(corsOptions));
+
+const io = new Server(server, {
+  cors: corsOptions,
+});
+
+io.on("connection", (socket) => {
+  socket.on("setup", (userData) => {
+    if (userData && userData._id) {
+      socket.join(userData._id);
+      socket.emit("connected");
+    }
+  });
+
+  socket.on("new message", (newMessageReceived) => {
+    let chatUserId = newMessageReceived.receiverId;
+    if (!chatUserId) return;
+    socket.in(chatUserId).emit("message received", newMessageReceived);
+  });
+});
 
 app.use(express.json());
 
@@ -60,7 +81,7 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB Connected ✅");
 
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log("Server running on port " + PORT + " 🚀");
     });
   })
