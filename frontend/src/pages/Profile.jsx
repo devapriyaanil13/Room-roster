@@ -8,6 +8,7 @@ function Profile() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const requestedTab = queryParams.get("tab") || "edit";
+  const isOnboarding = queryParams.get("onboarding") === "1";
 
   const [activeTab, setActiveTab] = useState(requestedTab);
   const [loadingImage, setLoadingImage] = useState(false);
@@ -88,6 +89,9 @@ function Profile() {
         { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
       );
       alert("Profile updated successfully!");
+      if (isOnboarding) {
+        navigate("/home", { replace: true });
+      }
     } catch (error) {
       console.error("Error updating profile", error);
       alert("Failed to update profile.");

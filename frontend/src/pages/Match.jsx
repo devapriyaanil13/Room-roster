@@ -26,7 +26,16 @@ function Match() {
     }
   };
 
-  const handlePass = () => {
+  const handlePass = async () => {
+    if (profiles.length === 0 || currentIndex >= profiles.length) return;
+    try {
+      const token = localStorage.getItem("token");
+      await apiClient.post(`/users/pass/${profiles[currentIndex]._id}`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+    } catch(err) {
+      console.error("Pass error", err);
+    }
     setCurrentIndex((prevIndex) => prevIndex + 1);
   };
 

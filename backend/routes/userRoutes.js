@@ -46,9 +46,11 @@ router.get("/roommates", auth, async (req, res) => {
     const currentUser = await User.findById(req.user.id);
     if (!currentUser) return res.status(404).json({ message: "User not found" });
 
+    const excludedIds = [currentUser._id, ...(currentUser.matches || []), ...(currentUser.passed || [])];
+
     // Basic filter
     let query = { 
-      _id: { $ne: req.user.id },
+      _id: { $nin: excludedIds },
       lookingFor: { $in: ["Roommate", "Both"] } 
     };
 
@@ -121,6 +123,29 @@ router.get("/matches/list", auth, async (req, res) => {
     if (!currentUser) return res.status(404).json({ message: "User not found" });
 
     res.json(currentUser.matches);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
+// POST /pass/:id - Log a passed profile explicitly
+router.post("/pass/:id", auth, async (req, res) => {
+  try {
+    const currentUserId = req.user.id;
+    const targetUserId = req.params.id;
+
+    if (currentUserId === targetUserId) return res.status(400).json({ message: "Cannot pass yourself" });
+
+    const currentUser = await User.findById(currentUserId);
+    if (!currentUser) return res.status(404).json({ message: "User not found" });
+
+    if (!currentUser.passed.includes(targetUserId)) {
+      currentUser.passed.push(targetUserId);
+      await currentUser.save();
+    }
+    
+    res.json({ message: "Passed profile successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server Error" });

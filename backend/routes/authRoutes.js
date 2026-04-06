@@ -61,7 +61,9 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    const isNewProfile = user.gender === "Any" || !user.bio;
+    // Onboarding = Preferences not completed yet (schema defaults gender to "Any", bio to "",
+    // so the old check kept almost everyone "new" forever).
+    const isNewProfile = !user.lookingFor;
 
     res.json({ token, isNewProfile });
 

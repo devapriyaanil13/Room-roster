@@ -22,12 +22,18 @@ function Login() {
       localStorage.setItem("token", res.data.token);
       
       if (res.data.isNewProfile) {
-        navigate("/profile?tab=preferences");
+        navigate("/profile?tab=preferences&onboarding=1", { replace: true });
       } else {
-        navigate("/home");
+        navigate("/home", { replace: true });
       }
 
     } catch (err) {
+      if (!err.response) {
+        alert(
+          "Cannot reach the server. If you are on the live site, set Netlify env VITE_API_URL to your Render URL (e.g. https://room-roster.onrender.com) and redeploy."
+        );
+        return;
+      }
       const errorMsg = err.response?.data?.message || err.message || "Invalid login";
       alert(errorMsg);
     }

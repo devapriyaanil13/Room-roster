@@ -62,6 +62,11 @@ const userSchema = new mongoose.Schema({
   matches: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
+  }],
+
+  passed: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }]
 
 });
